@@ -23,8 +23,7 @@ and app/content restrictions. Root access and developer mode are not required.
 This is the first standalone release. Install through HACS as a custom
 integration or extract the release ZIP into the Home Assistant configuration
 directory, then restart Home Assistant. Pair the television with the built-in
-LG webOS integration before adding LG TV Capture. The private floorplan can
-continue using its pinned capture core without installing the optional camera.
+LG webOS integration before adding LG TV Capture.
 
 ### Security
 
