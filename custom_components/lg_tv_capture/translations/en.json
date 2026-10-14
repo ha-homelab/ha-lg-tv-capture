@@ -1,0 +1,37 @@
+{
+  "title": "LG TV Capture",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add a TV screenshot camera",
+        "description": "Select an LG TV already paired with the built-in LG webOS Smart TV integration. A snapshot camera will expose the visible TV screen to Home Assistant. Captures happen only on image requests, at most once a minute. Some apps and protected content cannot be captured.",
+        "data": {
+          "source_entity_id": "LG webOS TV",
+          "allow_websocket": "Allow screenshot access through the WebSocket API"
+        },
+        "data_description": {
+          "allow_websocket": "Optional for custom dashboards. Authenticated clients with read access to the selected TV can request its screenshot. Standard camera cards do not need this option."
+        }
+      }
+    },
+    "error": {
+      "invalid_tv": "Select an enabled media player from the built-in LG webOS Smart TV integration."
+    },
+    "abort": {
+      "already_configured": "This television already has a screenshot camera."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Screenshot access",
+        "data": {
+          "allow_websocket": "Allow screenshot access through the WebSocket API"
+        },
+        "data_description": {
+          "allow_websocket": "Authenticated clients with read access to the selected TV can request screenshots. Standard camera cards do not need this option."
+        }
+      }
+    }
+  }
+}
