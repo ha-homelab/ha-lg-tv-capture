@@ -89,10 +89,10 @@ def paired_certificate(data: bytes) -> None:
     try:
         certificate = x509.load_der_x509_certificate(data)
         key = certificate.public_key()
-    except (ValueError, UnsupportedAlgorithm):
+    except (ValueError, x509.InvalidVersion, UnsupportedAlgorithm):
         try:
             production.paired_fingerprint(data)
-        except (ValueError, UnsupportedAlgorithm):
+        except ValueError:
             return
         raise AssertionError("malformed certificate accepted") from None
     expected = (

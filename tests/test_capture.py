@@ -5,6 +5,7 @@ import base64
 from datetime import UTC, datetime, timedelta
 from hashlib import sha256
 from io import BytesIO
+from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, Mock, patch
 
@@ -374,3 +375,26 @@ async def test_late_registration_reuses_early_capture(hass, television):
     assert api.get_capture(hass, entity_id) is early
     assert early._registry_id == source.id
     assert entity_id not in api.get_store(hass).captures
+
+
+@pytest.fixture
+def invalid_version_certificate():
+    return (
+        Path(__file__).resolve().parents[1]
+        / "fuzz/corpus/paired-certificate/invalid-version.der"
+    ).read_bytes()
+
+
+async def test_invalid_certificate_version_rejected_before_capture(
+    capture, television, transport, invalid_version_certificate
+):
+    certificate = invalid_version_certificate
+    with pytest.raises(x509.InvalidVersion):
+        x509.load_der_x509_certificate(certificate)
+    with pytest.raises(ValueError, match="Invalid paired TLS certificate"):
+        api.paired_fingerprint(certificate)
+    tls = television.client.connection.get_extra_info.return_value
+    tls.getpeercert.return_value = certificate
+    assert await capture.get() == {"image": None}
+    television.client.request.assert_not_awaited()
+    transport.session.get.assert_not_called()

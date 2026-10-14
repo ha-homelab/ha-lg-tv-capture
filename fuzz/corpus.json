@@ -113,5 +113,10 @@
     "target": "paired-certificate",
     "file": "malformed.der",
     "accepted": false
+  },
+  {
+    "target": "paired-certificate",
+    "file": "invalid-version.der",
+    "accepted": false
   }
 ]

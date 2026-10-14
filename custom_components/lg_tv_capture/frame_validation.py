@@ -10,6 +10,7 @@ from urllib.parse import urlsplit
 
 from aiohttp import Fingerprint
 from cryptography import x509
+from cryptography.exceptions import UnsupportedAlgorithm
 from cryptography.hazmat.primitives.asymmetric import ec, ed448, ed25519, rsa
 from PIL import Image
 
@@ -22,7 +23,10 @@ def paired_fingerprint(certificate: bytes) -> Fingerprint:
     Pairing supplies trust, so a self-signed certificate is expected. This check
     does not replace that trust with a public CA or disable fingerprint matching.
     """
-    key = x509.load_der_x509_certificate(certificate).public_key()
+    try:
+        key = x509.load_der_x509_certificate(certificate).public_key()
+    except (ValueError, x509.InvalidVersion, UnsupportedAlgorithm) as error:
+        raise ValueError("Invalid paired TLS certificate") from error
     if not (
         isinstance(key, rsa.RSAPublicKey)
         and key.key_size >= 2048

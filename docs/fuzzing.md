@@ -95,3 +95,14 @@ The installable ZIP allowlists integration files, including the production
 dependencies are excluded. Existing deterministic package tests verify this
 inventory. Fuzzing never connects to a TV, Home Assistant, MQTT or any other
 service, and it never installs or deploys the integration.
+
+### Retained RC regression
+
+The initial 0.1.1 RC campaign found that a mutated synthetic certificate with
+an unsupported X.509 version raises `cryptography.x509.InvalidVersion`, not
+`ValueError`. The production validator now converts malformed or unsupported
+certificate errors into its documented rejection path. The oracle explicitly
+recognizes invalid versions and requires production to reject them; it does
+not suppress unexpected failures. `invalid-version.der` preserves the original
+synthetic input, and an integration test verifies rejection before any capture
+request or download. No real TV certificate or private key is included.
