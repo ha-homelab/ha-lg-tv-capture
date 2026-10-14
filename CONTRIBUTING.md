@@ -42,11 +42,17 @@ are managed by the shared release toolkit; edit its policy or source templates
 rather than reformatting generated files. A passing automated suite does not
 replace acceptance testing of the exact release on supported hardware.
 
-## Opt-in CI approval
+## Opt-in automatic approval
 
-After its initial reviewed installation, the approval workflow can record an
-approval for an owner-authored PR carrying the `auto-approve` label. It requires
-the complete Quality gate to pass for that exact current commit. It only reads
-GitHub metadata and never executes code or downloads artifacts from the PR.
-This automation records maintainer opt-in and CI success, not human review;
-branch protection, required checks and resolved review threads still apply.
+The `auto-approve` label opts an eligible maintainer or dependency PR into the
+organization's shared, commit-pinned approval workflow. It reads GitHub metadata
+only: it never checks out PR code or downloads PR artifacts. Dependabot uses
+`GITHUB_TOKEN`; owner-authored PRs use the independent `californiantiramisu`
+reviewer through the existing organization `BOT_PAT` secret. Repository access
+to that selected secret and the bot's Write role are provisioned separately;
+missing credentials fail closed. The secret value is never stored in this repo.
+
+Automatic approval records maintainer opt-in, not a human code review. It may
+precede CI completion. The protected `main` branch still requires the successful
+**CI gate**, an up-to-date approval, and resolved review conversations before any
+merge. The shared workflow rechecks the live PR head and base before approving.
