@@ -1,0 +1,17 @@
+name: Security checks
+on:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  scan:
+    uses: victron-venus/venus-os-ci-toolkit/.github/workflows/security-scan.yml@fb370993d61757a03b34f9cdfeebf184cde877a0
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    with:
+      languages: python
+      run-codeql: true
+      run-trivy: true
+      run-dependency-review: true

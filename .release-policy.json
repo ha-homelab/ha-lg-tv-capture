@@ -1,0 +1,53 @@
+{
+  "repository": "ha-homelab/ha-lg-tv-capture",
+  "mode": "release",
+  "default_branch": "main",
+  "visibility": "public",
+  "version_file": "custom_components/lg_tv_capture/manifest.json",
+  "validation_workflows": [
+    "tests.yml",
+    "security.yml"
+  ],
+  "artifact_pattern": "release-assets*",
+  "local_checks": [
+    "uv run --frozen pytest",
+    "uv run --frozen ruff check custom_components tests scripts/package_release.py",
+    "python3 scripts/test_package_release.py"
+  ],
+  "notes": [
+    "Only the allowlisted integration code and MIT license enter installable archives. Tests use synthetic images; no home configuration, credentials or captured TV frames are distributed.",
+    "Automated tests validate Home Assistant integration contracts and simulated television responses. They do not establish firmware or protected-content compatibility on every LG television."
+  ],
+  "release_notes": "CHANGELOG.md",
+  "single_entry_ci": true,
+  "versioning": {
+    "schema": 1,
+    "promotion": "promote-bytes",
+    "files": [
+      {
+        "path": "custom_components/lg_tv_capture/manifest.json",
+        "format": "json",
+        "field": "version",
+        "value": "package"
+      }
+    ],
+    "artifacts": [
+      {
+        "path": "lg-tv-capture-*.zip",
+        "format": "zip-json",
+        "member": "custom_components/lg_tv_capture/manifest.json",
+        "field": "version",
+        "value": "package"
+      },
+      {
+        "path": "lg-tv-capture.version.json",
+        "format": "json",
+        "field": "version",
+        "value": "package"
+      }
+    ],
+    "toolkit_revision": "fb370993d61757a03b34f9cdfeebf184cde877a0"
+  },
+  "toolkit_revision": "fb370993d61757a03b34f9cdfeebf184cde877a0",
+  "sign_releases": true
+}
