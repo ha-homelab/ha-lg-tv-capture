@@ -11,7 +11,8 @@
   "artifact_pattern": "release-assets*",
   "local_checks": [
     "uv run --frozen pytest",
-    "uv run --frozen ruff check custom_components tests scripts/package_release.py",
+    "uv run --frozen ruff check custom_components tests fuzz scripts/package_release.py",
+    "uv run --frozen python fuzz/replay.py",
     "python3 scripts/test_package_release.py"
   ],
   "notes": [
@@ -46,8 +47,11 @@
         "value": "package"
       }
     ],
-    "toolkit_revision": "fb370993d61757a03b34f9cdfeebf184cde877a0"
+    "toolkit_revision": "0b674066266512c6ff1f72b5d98d36b4ea42141c"
   },
-  "toolkit_revision": "fb370993d61757a03b34f9cdfeebf184cde877a0",
-  "sign_releases": true
+  "toolkit_revision": "0b674066266512c6ff1f72b5d98d36b4ea42141c",
+  "sign_releases": true,
+  "fuzzing": {
+    "toolkit_ref": "0b674066266512c6ff1f72b5d98d36b4ea42141c"
+  }
 }

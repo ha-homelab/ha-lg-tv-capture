@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "language": "python",
+  "setup": [
+    [
+      "python3",
+      "-m",
+      "venv",
+      ".fuzz-venv"
+    ],
+    [
+      ".fuzz-venv/bin/python",
+      "-m",
+      "pip",
+      "install",
+      "--require-hashes",
+      "--only-binary=:all:",
+      "-r",
+      ".github/requirements-fuzz.txt"
+    ]
+  ],
+  "targets": [
+    {
+      "name": "capture-url",
+      "engine": "atheris",
+      "command": [
+        ".fuzz-venv/bin/python",
+        "fuzz/harness.py",
+        "capture-url",
+        "-max_len=8192"
+      ],
+      "seconds": 60,
+      "corpus": "fuzz/corpus/capture-url",
+      "instrumentation": [
+        {
+          "module": "frame_validation",
+          "functions": [
+            "capture_url"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "thumbnail",
+      "engine": "atheris",
+      "command": [
+        ".fuzz-venv/bin/python",
+        "fuzz/harness.py",
+        "thumbnail",
+        "-max_len=65536"
+      ],
+      "seconds": 60,
+      "corpus": "fuzz/corpus/thumbnail",
+      "instrumentation": [
+        {
+          "module": "frame_validation",
+          "functions": [
+            "thumbnail"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "paired-certificate",
+      "engine": "atheris",
+      "command": [
+        ".fuzz-venv/bin/python",
+        "fuzz/harness.py",
+        "paired-certificate",
+        "-max_len=65536"
+      ],
+      "seconds": 60,
+      "corpus": "fuzz/corpus/paired-certificate",
+      "instrumentation": [
+        {
+          "module": "frame_validation",
+          "functions": [
+            "paired_fingerprint"
+          ]
+        }
+      ]
+    }
+  ],
+  "preflight-paths": [
+    "custom_components/lg_tv_capture",
+    "fuzz"
+  ]
+}

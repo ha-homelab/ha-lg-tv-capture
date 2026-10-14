@@ -13,3 +13,10 @@ release-assets/
 .release-*.json
 !.release-policy.json
 *.egg-info/
+
+.fuzz-venv/
+fuzz-results/
+crash-*
+timeout-*
+oom-*
+.fuzz-preflight/
