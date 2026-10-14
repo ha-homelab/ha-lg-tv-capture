@@ -30,7 +30,7 @@ Copy `custom_components/lg_tv_capture` from this repository into your Home
 Assistant `config/custom_components` directory, then restart Home Assistant.
 The final path should be `config/custom_components/lg_tv_capture/manifest.json`.
 
-Alternatively, download the versioned `lg_tv_capture-<version>.zip` release
+Alternatively, download the versioned `lg-tv-capture-<version>.zip` release
 asset and extract it into the Home Assistant configuration directory. The
 archive contains the `custom_components/lg_tv_capture/` path; check that the
 resulting folder is not nested inside an extra directory. Restart Home
