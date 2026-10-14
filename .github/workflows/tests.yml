@@ -22,9 +22,11 @@ jobs:
       - name: Install locked test environment
         run: uv sync --frozen
       - name: Lint maintained Python sources
-        run: uv run --frozen ruff check custom_components tests scripts/package_release.py
+        run: uv run --frozen ruff check custom_components tests fuzz scripts/package_release.py
       - name: Test real Home Assistant contracts and simulated capture transport
         run: uv run --frozen pytest
+      - name: Replay synthetic fuzz regressions without mutation campaigns
+        run: uv run --frozen python fuzz/replay.py
       - name: Verify deterministic private-data-free distribution
         run: python3 scripts/test_package_release.py
       - name: Validate reviewed release notes before publication

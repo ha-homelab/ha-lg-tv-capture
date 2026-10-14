@@ -1,5 +1,7 @@
 # LG TV Capture
 
+[![Fuzzing: RC only](https://img.shields.io/badge/Fuzzing-RC%20only-blue)](docs/fuzzing.md)
+
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/15477/badge)](https://www.bestpractices.dev/en/projects/15477)
 
 On-demand screenshots of an LG webOS television, exposed as a Home Assistant
@@ -143,3 +145,11 @@ Repository settings, required checks and release protection are managed in
 [Contribute](CONTRIBUTING.md) · [Governance](GOVERNANCE.md) ·
 [Code of Conduct](CODE_OF_CONDUCT.md) · [Roadmap](ROADMAP.md) ·
 [Quality and assessment scope](docs/quality.md)
+
+## Release-candidate fuzzing
+
+The public release pipeline qualifies each RC with bounded, offline Atheris
+campaigns for capture URLs, synthetic JPEGs and paired-certificate validation.
+Ordinary CI replays the synthetic regression corpus without mutation campaigns.
+See [targets, limits and reproduction commands](docs/fuzzing.md). These checks
+do not connect to a television or establish firmware compatibility.

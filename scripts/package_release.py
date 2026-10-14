@@ -17,6 +17,7 @@ FILES = (
     "__init__.py",
     "camera.py",
     "capture.py",
+    "frame_validation.py",
     "config_flow.py",
     "const.py",
     "manifest.json",

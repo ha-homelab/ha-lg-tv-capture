@@ -1,0 +1,117 @@
+[
+  {
+    "target": "capture-url",
+    "file": "ipv4.json",
+    "accepted": true
+  },
+  {
+    "target": "capture-url",
+    "file": "ipv6.json",
+    "accepted": true
+  },
+  {
+    "target": "capture-url",
+    "file": "mixed-case.json",
+    "accepted": true
+  },
+  {
+    "target": "capture-url",
+    "file": "credentials.json",
+    "accepted": false
+  },
+  {
+    "target": "capture-url",
+    "file": "query.json",
+    "accepted": false
+  },
+  {
+    "target": "capture-url",
+    "file": "traversal.json",
+    "accepted": false
+  },
+  {
+    "target": "capture-url",
+    "file": "port.json",
+    "accepted": false
+  },
+  {
+    "target": "capture-url",
+    "file": "other-host.json",
+    "accepted": false
+  },
+  {
+    "target": "capture-url",
+    "file": "type.json",
+    "accepted": false
+  },
+  {
+    "target": "thumbnail",
+    "file": "rgb.jpg",
+    "accepted": true
+  },
+  {
+    "target": "thumbnail",
+    "file": "gray.jpg",
+    "accepted": true
+  },
+  {
+    "target": "thumbnail",
+    "file": "metadata.jpg",
+    "accepted": true
+  },
+  {
+    "target": "thumbnail",
+    "file": "wide.jpg",
+    "accepted": false
+  },
+  {
+    "target": "thumbnail",
+    "file": "tall.jpg",
+    "accepted": false
+  },
+  {
+    "target": "thumbnail",
+    "file": "truncated.jpg",
+    "accepted": false
+  },
+  {
+    "target": "thumbnail",
+    "file": "malformed.jpg",
+    "accepted": false
+  },
+  {
+    "target": "paired-certificate",
+    "file": "rsa-2047.der",
+    "accepted": false
+  },
+  {
+    "target": "paired-certificate",
+    "file": "rsa-2048.der",
+    "accepted": true
+  },
+  {
+    "target": "paired-certificate",
+    "file": "p192.der",
+    "accepted": false
+  },
+  {
+    "target": "paired-certificate",
+    "file": "p224.der",
+    "accepted": true
+  },
+  {
+    "target": "paired-certificate",
+    "file": "p256.der",
+    "accepted": true
+  },
+  {
+    "target": "paired-certificate",
+    "file": "ed25519.der",
+    "accepted": true
+  },
+  {
+    "target": "paired-certificate",
+    "file": "malformed.der",
+    "accepted": false
+  }
+]

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add public-RC-only offline fuzzing for capture URLs, synthetic JPEGs and paired certificates, with ordinary CI regression replay and strict production-instrumentation checks.
+- Move unchanged pure capture validation into a Home Assistant-independent module and include it in the installable package.
 - Reject malformed or weak paired-TV certificates before requesting or downloading a screenshot. RSA requires at least 2048 bits, EC at least 224 bits; Ed25519/Ed448 are accepted. Update obsolete TV firmware/certificates instead of disabling verification.
 - Document private reporting, governance, contribution rights and current OpenSSF evidence limits.
 
