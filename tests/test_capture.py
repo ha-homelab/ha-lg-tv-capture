@@ -2,6 +2,7 @@
 
 import asyncio
 import base64
+from datetime import UTC, datetime, timedelta
 from hashlib import sha256
 from io import BytesIO
 from types import SimpleNamespace
@@ -9,6 +10,9 @@ from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 from aiohttp import Fingerprint
+from cryptography import x509
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import ec, ed25519, rsa
 from homeassistant.helpers import entity_registry as er
 from PIL import Image
 
@@ -19,6 +23,29 @@ def jpeg(size=(960, 540), **kwargs):
     output = BytesIO()
     Image.new("RGB", size, "#579bbc").save(output, format="JPEG", **kwargs)
     return output.getvalue()
+
+
+def self_signed_certificate(key):
+    """Create a synthetic paired-TV certificate without a trusted public CA."""
+    name = x509.Name([x509.NameAttribute(x509.NameOID.COMMON_NAME, "test-tv")])
+    now = datetime.now(UTC)
+    algorithm = None if isinstance(key, ed25519.Ed25519PrivateKey) else hashes.SHA256()
+    return (
+        x509.CertificateBuilder()
+        .subject_name(name)
+        .issuer_name(name)
+        .public_key(key.public_key())
+        .serial_number(x509.random_serial_number())
+        .not_valid_before(now - timedelta(days=1))
+        .not_valid_after(now + timedelta(days=1))
+        .sign(key, algorithm)
+        .public_bytes(serialization.Encoding.DER)
+    )
+
+
+@pytest.fixture(scope="module")
+def paired_certificate():
+    return self_signed_certificate(rsa.generate_private_key(65537, 2048))
 
 
 @pytest.fixture
@@ -221,8 +248,8 @@ async def test_changed_private_ha_api_fails_closed(capture, exception):
 
 
 @pytest.fixture
-def transport(television):
-    certificate = b"paired certificate"
+def transport(television, paired_certificate):
+    certificate = paired_certificate
     television.client.connection.get_extra_info.return_value = SimpleNamespace(
         getpeercert=Mock(return_value=certificate)
     )
@@ -260,6 +287,39 @@ async def test_capture_pins_paired_certificate_and_disables_redirects(
     assert args["allow_redirects"] is False
     assert args["auto_decompress"] is False
     assert args["timeout"].total == 6
+
+
+@pytest.mark.parametrize("kind", ["rsa1024", "ec192", "malformed"])
+async def test_weak_or_invalid_certificate_rejected_before_capture(
+    capture, television, transport, kind
+):
+    if kind == "malformed":
+        certificate = b"not a certificate"
+    else:
+        key = (
+            rsa.generate_private_key(65537, 1024)
+            if kind == "rsa1024"
+            else ec.generate_private_key(ec.SECP192R1())
+        )
+        certificate = self_signed_certificate(key)
+    tls = television.client.connection.get_extra_info.return_value
+    tls.getpeercert.return_value = certificate
+    assert await capture.get() == {"image": None}
+    television.client.request.assert_not_awaited()
+    transport.session.get.assert_not_called()
+
+
+@pytest.mark.parametrize("kind", ["rsa2048", "ec224", "ed25519"])
+def test_supported_certificate_is_pinned_without_requiring_public_ca(kind):
+    key = {
+        "rsa2048": lambda: rsa.generate_private_key(65537, 2048),
+        "ec224": lambda: ec.generate_private_key(ec.SECP224R1()),
+        "ed25519": ed25519.Ed25519PrivateKey.generate,
+    }[kind]()
+    certificate = self_signed_certificate(key)
+    assert (
+        api.paired_fingerprint(certificate).fingerprint == sha256(certificate).digest()
+    )
 
 
 @pytest.mark.parametrize("status", [301, 302, 403, 500])

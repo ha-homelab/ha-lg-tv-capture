@@ -14,6 +14,8 @@ from typing import Any, NotRequired, TypedDict
 from urllib.parse import urlsplit
 
 from aiohttp import ClientTimeout, Fingerprint
+from cryptography import x509
+from cryptography.hazmat.primitives.asymmetric import ec, ed448, ed25519, rsa
 from homeassistant.const import EVENT_STATE_CHANGED
 from homeassistant.core import Event, HomeAssistant, callback
 from homeassistant.helpers import entity_registry as er
@@ -24,6 +26,24 @@ DOMAIN = "lg_tv_capture"
 INTERVAL = 60
 MAX_BYTES = 2_000_000
 ACTIVE_STATES = frozenset({"on", "playing", "paused", "idle", "buffering"})
+
+
+def paired_fingerprint(certificate: bytes) -> Fingerprint:
+    """Pin the paired certificate only when its authentication key is strong.
+
+    Pairing supplies trust, so a self-signed certificate is expected. This check
+    does not replace that trust with a public CA or disable fingerprint matching.
+    """
+    key = x509.load_der_x509_certificate(certificate).public_key()
+    if not (
+        isinstance(key, rsa.RSAPublicKey)
+        and key.key_size >= 2048
+        or isinstance(key, ec.EllipticCurvePublicKey)
+        and key.key_size >= 224
+        or isinstance(key, (ed25519.Ed25519PublicKey, ed448.Ed448PublicKey))
+    ):
+        raise ValueError("Paired TLS certificate key is unsupported or too small")
+    return Fingerprint(sha256(certificate).digest())
 
 
 class Frame(TypedDict):
@@ -182,7 +202,7 @@ class TVCapture:
                 client.connection,
                 self._generation,
             )
-        except (AttributeError, KeyError, TypeError, ValueError):
+        except AttributeError, KeyError, TypeError, ValueError:
             return None
 
     async def get(self) -> Frame:
@@ -235,7 +255,7 @@ class TVCapture:
         tls = client.connection.get_extra_info("ssl_object")
         if not tls or not (certificate := tls.getpeercert(binary_form=True)):
             raise ValueError("Paired TLS connection required")
-        fingerprint = Fingerprint(sha256(certificate).digest())
+        fingerprint = paired_fingerprint(certificate)
         reply = await client.request("tv/executeOneShot")
         if not isinstance(reply, dict) or reply.get("returnValue") is not True:
             raise ValueError("TV capture failed")

@@ -1,5 +1,7 @@
 # LG TV Capture
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/15477/badge)](https://www.bestpractices.dev/en/projects/15477)
+
 On-demand screenshots of an LG webOS television, exposed as a Home Assistant
 snapshot camera. Reuses the TV connection already paired by Home Assistant's
 built-in **LG webOS Smart TV** integration. No root access, developer mode,
@@ -135,3 +137,9 @@ ha-homelab projects. See [release operations](docs/release-workflow.md).
 
 Repository settings, required checks and release protection are managed in
 [Terraform](https://github.com/4alvit/terraform-github-ha-homelab).
+
+## Project practices
+
+[Contribute](CONTRIBUTING.md) · [Governance](GOVERNANCE.md) ·
+[Code of Conduct](CODE_OF_CONDUCT.md) · [Roadmap](ROADMAP.md) ·
+[Quality and assessment scope](docs/quality.md)
