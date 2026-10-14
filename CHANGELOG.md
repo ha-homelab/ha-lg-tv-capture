@@ -7,6 +7,22 @@
 - Reject malformed or weak paired-TV certificates before requesting or downloading a screenshot. RSA requires at least 2048 bits, EC at least 224 bits; Ed25519/Ed448 are accepted. Update obsolete TV firmware/certificates instead of disabling verification.
 - Document private reporting, governance, contribution rights and current OpenSSF evidence limits.
 
+
+### Upgrade
+
+Update through HACS or replace the integration directory with the release ZIP,
+then restart Home Assistant. Existing LG webOS pairing and configuration are
+retained; no data migration is needed. Home Assistant 2026.10.1 or newer remains
+required. Update TV firmware if its paired certificate uses an obsolete weak key.
+
+### Security
+
+Capture downloads remain restricted to the paired television and its verified
+certificate. The new offline fuzz targets validate URL restrictions, bounded
+JPEG conversion and certificate key strength using synthetic inputs; they do
+not contact televisions or grant additional network access. Captured frames
+remain in memory.
+
 ## [0.1.0]
 
 ### Added
