@@ -46,8 +46,8 @@
         "value": "package"
       }
     ],
-    "toolkit_revision": "413248b9fdb724e787097c5c56802412a49e9467"
+    "toolkit_revision": "fb370993d61757a03b34f9cdfeebf184cde877a0"
   },
-  "toolkit_revision": "413248b9fdb724e787097c5c56802412a49e9467",
+  "toolkit_revision": "fb370993d61757a03b34f9cdfeebf184cde877a0",
   "sign_releases": true
 }
