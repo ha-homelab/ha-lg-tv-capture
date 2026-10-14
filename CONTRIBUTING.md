@@ -16,6 +16,7 @@ uv run --frozen ruff check custom_components tests scripts/package_release.py
 uv run --frozen ruff format --check custom_components tests
 uv run --frozen pytest
 python3 scripts/test_package_release.py
+python3 scripts/test_consumer_changelog.py
 ```
 
 The test suite uses the real Home Assistant test framework with synthetic
@@ -40,3 +41,18 @@ See [RELEASING.md](RELEASING.md). Release workflows and generated policy files
 are managed by the shared release toolkit; edit its policy or source templates
 rather than reformatting generated files. A passing automated suite does not
 replace acceptance testing of the exact release on supported hardware.
+
+## Opt-in automatic approval
+
+The `auto-approve` label opts an eligible maintainer or dependency PR into the
+organization's shared, commit-pinned approval workflow. It reads GitHub metadata
+only: it never checks out PR code or downloads PR artifacts. Dependabot uses
+`GITHUB_TOKEN`; owner-authored PRs use the independent `californiantiramisu`
+reviewer through the existing organization `BOT_PAT` secret. Repository access
+to that selected secret and the bot's Write role are provisioned separately;
+missing credentials fail closed. The secret value is never stored in this repo.
+
+Automatic approval records maintainer opt-in, not a human code review. It may
+precede CI completion. The protected `main` branch still requires the successful
+**CI gate**, an up-to-date approval, and resolved review conversations before any
+merge. The shared workflow rechecks the live PR head and base before approving.
