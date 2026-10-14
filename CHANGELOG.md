@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Reject malformed or weak paired-TV certificates before requesting or downloading a screenshot. RSA requires at least 2048 bits, EC at least 224 bits; Ed25519/Ed448 are accepted. Update obsolete TV firmware/certificates instead of disabling verification.
+- Document private reporting, governance, contribution rights and current OpenSSF evidence limits.
+
 ## [0.1.0]
 
 ### Added
