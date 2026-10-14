@@ -28,4 +28,4 @@ jobs:
       - name: Verify deterministic private-data-free distribution
         run: python3 scripts/test_package_release.py
       - name: Validate reviewed release notes before publication
-        run: python3 scripts/test_release_notes.py
+        run: python3 scripts/test_consumer_changelog.py

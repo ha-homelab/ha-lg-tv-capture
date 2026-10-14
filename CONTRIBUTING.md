@@ -16,6 +16,7 @@ uv run --frozen ruff check custom_components tests scripts/package_release.py
 uv run --frozen ruff format --check custom_components tests
 uv run --frozen pytest
 python3 scripts/test_package_release.py
+python3 scripts/test_consumer_changelog.py
 ```
 
 The test suite uses the real Home Assistant test framework with synthetic
@@ -40,3 +41,12 @@ See [RELEASING.md](RELEASING.md). Release workflows and generated policy files
 are managed by the shared release toolkit; edit its policy or source templates
 rather than reformatting generated files. A passing automated suite does not
 replace acceptance testing of the exact release on supported hardware.
+
+## Opt-in CI approval
+
+After its initial reviewed installation, the approval workflow can record an
+approval for an owner-authored PR carrying the `auto-approve` label. It requires
+the complete Quality gate to pass for that exact current commit. It only reads
+GitHub metadata and never executes code or downloads artifacts from the PR.
+This automation records maintainer opt-in and CI success, not human review;
+branch protection, required checks and resolved review threads still apply.
