@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [0.1.1] - Development line
 
 - Add public-RC-only offline fuzzing for capture URLs, synthetic JPEGs and paired certificates, with ordinary CI regression replay and strict production-instrumentation checks.
 - Move unchanged pure capture validation into a Home Assistant-independent module and include it in the installable package.
