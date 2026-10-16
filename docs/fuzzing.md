@@ -1,5 +1,9 @@
 # Release-candidate fuzzing
 
+See the [illustrated RC fuzzing process and verified rollout results](https://github.com/victron-venus/venus-os-ci-toolkit/blob/main/docs/rc-fuzzing-results.md)
+for the shared release flow, evidence requirements and a dated cross-project
+snapshot. The project-specific scope and reproduction guidance below still apply.
+
 This public repository uses the shared `venus-os-ci-toolkit` Atheris runner.
 `.github/fuzz.json` declares the targets, dependency setup, production
 instrumentation and time budgets. `.release-policy.json` pins the workflow and
