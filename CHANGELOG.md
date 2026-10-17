@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.2] - 2026-10-17
+
+### Changed
+
+- Link the illustrated release-candidate fuzzing process and validation results from the project documentation.
+- Publish the documentation maintenance update with a synchronized integration manifest version.
+
+### Upgrade
+
+Update through HACS or replace the integration directory with the verified release ZIP, then restart Home Assistant. Existing pairing, configuration and Home Assistant requirements are preserved. Keep the previous package for rollback.
+
+### Security
+
+The paired-TV certificate checks and download restrictions remain unchanged. Offline release validation does not contact televisions or establish new device compatibility.
+
 ## [0.1.1] - Development line
 
 - Reject unsupported X.509 certificate versions consistently; retain the synthetic certificate found by RC fuzzing as an offline regression seed.
