@@ -24,7 +24,7 @@ jobs:
       contains(fromJSON('["4alvit","californiantiramisu","dependabot[bot]","renovate[bot]"]'), github.event.pull_request.user.login) &&
       !github.event.pull_request.draft &&
       contains(github.event.pull_request.labels.*.name, 'auto-approve')
-    uses: victron-venus/venus-os-ci-toolkit/.github/workflows/auto-approve-reusable.yml@fb370993d61757a03b34f9cdfeebf184cde877a0
+    uses: victron-venus/venus-os-ci-toolkit/.github/workflows/auto-approve-reusable.yml@6b2d99519d513d2b871d2a845ddd6134dea4af2c
     secrets:
       BOT_PAT: ${{ secrets.BOT_PAT }}
       APPROVAL_PAT: ${{ secrets.APPROVAL_PAT }}
