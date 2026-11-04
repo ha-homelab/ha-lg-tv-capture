@@ -16,8 +16,10 @@ empty or black image; this integration does not bypass content protection.
 
 ## Install
 
-Requires **Home Assistant 2026.10.1 or newer**. Automated tests target 2026.10.1;
-future releases may require compatibility updates.
+Requires **Home Assistant 2026.10.1 or newer**. The locked test environment targets
+Home Assistant 2026.11.0b6 with the matching official `pytest-homeassistant`
+package. This is a development dependency; installing the integration does not
+install a Home Assistant beta. Future releases may require compatibility updates.
 
 ### HACS custom repository
 

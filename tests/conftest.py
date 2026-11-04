@@ -6,15 +6,7 @@ from unittest.mock import AsyncMock, Mock, patch
 import pytest
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
-from pytest_homeassistant_custom_component.common import MockConfigEntry
-
-pytest_plugins = ["pytest_homeassistant_custom_component"]
-
-
-@pytest.fixture(autouse=True)
-def custom_integrations(enable_custom_integrations):
-    """Allow the real HA loader to discover this custom integration."""
-    yield
+from pytest_homeassistant.common import MockConfigEntry
 
 
 @pytest.fixture

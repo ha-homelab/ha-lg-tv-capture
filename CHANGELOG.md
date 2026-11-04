@@ -1,5 +1,27 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+- Replace the retired `pytest-homeassistant-custom-component` test plugin with
+  the official `pytest-homeassistant` package and its matching Home Assistant
+  2026.11.0b6 dependency. Use the supported fixture imports and plugin bootstrap.
+- Update the locked development environment to Pillow 13.0.0 and cryptography
+  50.0.2 without overriding Home Assistant's dependency requirements.
+
+### Upgrade
+
+Developers should run `uv sync --frozen` to replace the old test plugin. No
+integration configuration or Home Assistant runtime upgrade is required by this
+test-environment change.
+
+### Security
+
+The patched packages replace vulnerable versions in the development lockfile.
+Television capture permissions, certificate verification and runtime behavior
+are unchanged. Automated tests use simulated transport, not a physical TV.
+
 ## [0.1.3] - 2026-10-18
 
 ### Changed

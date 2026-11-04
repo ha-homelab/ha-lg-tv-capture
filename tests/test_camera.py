@@ -4,7 +4,7 @@ import base64
 from unittest.mock import AsyncMock
 
 from homeassistant.helpers import entity_registry as er
-from pytest_homeassistant_custom_component.common import MockConfigEntry
+from pytest_homeassistant.common import MockConfigEntry
 
 from custom_components.lg_tv_capture.camera import LGTVCaptureCamera
 from custom_components.lg_tv_capture.capture import get_capture
