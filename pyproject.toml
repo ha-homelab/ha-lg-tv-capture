@@ -8,7 +8,7 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-  "pytest-homeassistant-custom-component==0.13.375",
+  "pytest-homeassistant==2026.11.0b6",
   "aiowebostv==0.10.0",
   "PyTurboJPEG==1.8.3",
   "ruff==0.17.3",
@@ -19,7 +19,8 @@ asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 testpaths = ["tests"]
 pythonpath = ["."]
-addopts = "--strict-markers --disable-socket --allow-unix-socket"
+# Let the Home Assistant plugin install its httpx alias before respx loads.
+addopts = "-p no:respx --strict-markers --disable-socket --allow-unix-socket"
 
 [tool.ruff]
 target-version = "py314"
