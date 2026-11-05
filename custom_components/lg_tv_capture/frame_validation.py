@@ -82,5 +82,3 @@ def thumbnail(data: bytes) -> str:
         output = BytesIO()
         clean.save(output, format="JPEG", quality=80)
     return "data:image/jpeg;base64," + base64.b64encode(output.getvalue()).decode()
-
-
