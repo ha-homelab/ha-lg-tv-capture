@@ -6,7 +6,7 @@
 
 - Replace the retired `pytest-homeassistant-custom-component` test plugin with
   the official `pytest-homeassistant` package and its matching Home Assistant
-  2026.11.0b6 dependency. Use the supported fixture imports and plugin bootstrap.
+  2026.11.0 dependency. Use the supported fixture imports and plugin bootstrap.
 - Update the locked development environment to Pillow 13.0.0 and cryptography
   50.0.2 without overriding Home Assistant's dependency requirements.
 
