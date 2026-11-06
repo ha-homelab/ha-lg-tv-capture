@@ -44,19 +44,35 @@
       "groupSlug": "testing"
     },
     {
-      "description": "These generated locks use compile flags unsupported by the pinned Renovate parser; regenerate them through the documented source workflow.",
+      "description": "Regenerate the fixed-platform fuzz lock after changing its requirements input without executing build hooks.",
       "matchManagers": [
         "pip_requirements"
       ],
       "matchFileNames": [
-        ".github/requirements-fuzz.txt"
+        ".github/requirements-fuzz.in"
       ],
-      "enabled": false
+      "constraints": {
+        "uv": "0.13.4"
+      },
+      "postUpgradeTasks": {
+        "commands": [
+          "uv pip compile --python-version=3.12 --python-platform=x86_64-manylinux_2_28 --generate-hashes --no-build .github/requirements-fuzz.in --output-file=.github/requirements-fuzz.txt"
+        ],
+        "fileFilters": [
+          ".github/requirements-fuzz.txt"
+        ],
+        "executionMode": "update",
+        "workingDirTemplate": ".",
+        "installTools": {
+          "uv": {}
+        }
+      }
     }
   ],
   "pip_requirements": {
     "managerFilePatterns": [
-      "/(^|/)([^/]*[-_])?requirements[^/]*\\.(txt|pip)$/"
+      "/(^|/)([^/]*[-_])?requirements[^/]*\\.(txt|pip)$/",
+      "/^\\.github/requirements-fuzz\\.in$/"
     ]
   }
 }
