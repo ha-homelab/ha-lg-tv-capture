@@ -17,7 +17,8 @@
   ],
   "notes": [
     "Only the allowlisted integration code and MIT license enter installable archives. Tests use synthetic images; no home configuration, credentials or captured TV frames are distributed.",
-    "Automated tests validate Home Assistant integration contracts and simulated television responses. They do not establish firmware or protected-content compatibility on every LG television."
+    "Automated tests validate Home Assistant integration contracts and simulated television responses. They do not establish firmware or protected-content compatibility on every LG television.",
+    "The configured release-note file remains a full-validation input so its current release section, upgrade notes and security notes are checked."
   ],
   "release_notes": "CHANGELOG.md",
   "single_entry_ci": true,
@@ -60,7 +61,9 @@
   },
   "change_scope": {
     "documentation_paths": [],
-    "required_paths": [],
+    "required_paths": [
+      "CHANGELOG.md"
+    ],
     "always_validate_workflows": [
       "security.yml"
     ]
