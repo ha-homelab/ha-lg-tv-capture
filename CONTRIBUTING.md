@@ -80,3 +80,10 @@ strict modules and explicit interface types where TypeScript is used. Native
 C++ changes follow the surrounding ESPHome style, use explicit bounds and avoid
 unchecked pointer arithmetic. Do not reformat vendored code independently of
 its recorded upstream source. Existing exceptions must be explained in review.
+
+
+Renovate updates the fuzz requirements input and runs this fixed-platform regeneration command with uv 0.13.4. The runner allows only the exact command with shell execution disabled; source builds stay disabled and only the generated fuzz lock is collected.
+
+```sh
+uv pip compile --python-version=3.12 --python-platform=x86_64-manylinux_2_28 --generate-hashes --no-build .github/requirements-fuzz.in --output-file=.github/requirements-fuzz.txt
+```
