@@ -60,7 +60,10 @@
     "toolkit_ref": "6f0bf114a398f9c2b7e5407042c3828a8cc28b40"
   },
   "change_scope": {
-    "documentation_paths": [],
+    "documentation_paths": [
+      "GOVERNANCE.md",
+      "ROADMAP.md"
+    ],
     "required_paths": [
       "CHANGELOG.md"
     ],
