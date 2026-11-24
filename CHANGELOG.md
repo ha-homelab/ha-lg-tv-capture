@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.1.4] - Unreleased
+
+### Changed
+
+- keep local instruction files out of git.
+- add a navigation index for docs/.
+- verify current default branch before reviewed merges (#45).
+- complete reviewed dependency approval and merge wiring (#44).
+
+### Upgrade
+
+Developers should run `uv sync --frozen` to replace the old test plugin. No
+integration configuration or Home Assistant runtime upgrade is required by this
+test-environment change.
+
+### Security
+
+The patched packages replace vulnerable versions in the development lockfile.
+Television capture permissions, certificate verification and runtime behavior
+are unchanged. Automated tests use simulated transport, not a physical TV.
+
 ## [Unreleased]
 
 ### Changed
